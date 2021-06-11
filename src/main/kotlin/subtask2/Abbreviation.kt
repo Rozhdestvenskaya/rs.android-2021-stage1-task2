@@ -4,6 +4,12 @@ class Abbreviation {
 
     // TODO: Complete the following function
     fun abbreviationFromA(a: String, b: String): String {
-        throw NotImplementedError("Not implemented")
+        val firstArr = a.toUpperCase().toCharArray()
+        val secondArr = b.toCharArray()
+        val intersectedArray = firstArr.intersect(secondArr.toList())
+        if (intersectedArray.joinToString("") == b) {
+            return "YES"
+        }
+        return "NO"
     }
 }
