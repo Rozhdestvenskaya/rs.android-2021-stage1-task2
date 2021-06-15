@@ -11,16 +11,18 @@ class DateFormatter {
 
     // TODO: Complete the following function
     fun toTextDay(day: String, month: String, year: String): String {
-        return try {
-            val localDate = LocalDate.of(year.toInt(), month.toInt(), day.toInt())
-            val resultMonth = Month.valueOf(localDate.month.name).getDisplayName(TextStyle.FULL, Locale("ru"))
-            val resultDay = DayOfWeek.valueOf(localDate.dayOfWeek.name).getDisplayName(TextStyle.FULL, Locale("ru"))
-            val result = "$day $resultMonth, $resultDay"
-            result
+        val unexpectedResult = "Такого дня не существует"
+        val regex = "[0-9]+".toRegex()
+        if ((day + month + year).matches(regex = regex)) {
+            return try {
+                val localDate = LocalDate.of(year.toInt(), month.toInt(), day.toInt())
+                val resultMonth = Month.valueOf(localDate.month.name).getDisplayName(TextStyle.FULL, Locale("ru"))
+                val resultDay = DayOfWeek.valueOf(localDate.dayOfWeek.name).getDisplayName(TextStyle.FULL, Locale("ru"))
+                "$day $resultMonth, $resultDay"
+            } catch (e: DateTimeException) {
+                unexpectedResult
+            }
         }
-        catch (e: DateTimeException){
-            val result = "Такого дня не существует"
-            result
-        }
+        return unexpectedResult
     }
 }
